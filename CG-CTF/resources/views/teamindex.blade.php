@@ -2,19 +2,20 @@
 
 @section('content')
 <div class="container">
+    @if(!$team)
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Profile</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ url('ProfileEdit') }}">
+                    <form class="form-horizontal">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{$userdata['name']}}" required autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="{{$userdata['name']}}" readonly>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -38,39 +39,11 @@
                             </div>
                         </div>
                         
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                                @if($errors->has('editsuccess'))
-                                    <label class="control-label " for="inputSuccess1">
-                                          {{ $errors->first('editsuccess')}}
-                                     </label>
-                                @endif
-
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Submit
-                                </button>
+                                <a class="btn btn-primary" href="{{url('newteam')}}" role="button">创建队伍</a>
+                                <a class="btn btn-success" href="{{url('jointeam')}}" role="button">加入队伍</a>
                             </div>
                         </div>
                     </form>
@@ -78,5 +51,53 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="container">
+<table class="table table-hover">
+    <caption>Team member</caption>
+   <thead>
+      <tr>
+         <th>name</th>
+          <th>email</th>
+          <th>姓名</th>
+          <th>学号</th>
+      </tr>
+   </thead>
+   @if(isset($users))
+       @foreach($users as $user)
+    <tbody>
+         <td>{{$user['name']}}</td>
+          <td>{{$user['email']}}</td>
+          <td>{{$user['realname']}}</td>
+          <td>{{$user['snumber']}}</td>
+       </tr>
+   </tbody>
+       @endforeach
+    @endif
+</table>
+
+<table class="table">
+    <caption>Total Score:{{$score or '' }}</caption>
+   <thead>
+      <tr>
+      <th>Title</th>
+          <th>score</th>
+          <th>time</th>
+      </tr>
+   </thead>
+   @if(isset($challenges))
+       @foreach($challenges as $challenge)
+    <tbody>
+      <tr>
+      <td>{{$challenge['title']}}</td>
+          <td>{{$challenge['score']}}</td>
+          <td>{{$challenge['pivot']['created_at']}}</td>
+       </tr>
+   </tbody>
+       @endforeach
+    @endif
+</table>
+
+    @endif
 </div>
 @endsection

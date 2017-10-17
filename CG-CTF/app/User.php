@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'power', 'finishedchallenge', 'api_token'
+        'name', 'email', 'password', 'power', 'finishedchallenge', 'api_token','realname','snumber'
     ];
 
     /**
@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\challenge', 'challenge_users', 'userid', 'challengeid')->withPivot('created_at');
     }
 
+    public function team(){
+        return $this->belongsTo('App\team');
+    }
+
+
     public function challengePassed($challenge)
     {
         return !!$this->challenges()->where('challengeid', $challenge)->count();
@@ -53,9 +58,9 @@ class User extends Authenticatable
     public static function solvedchallenges($userid)
     {
         $user = User::find($userid);
-        $challenges = $user->challenges()->get();
-        $sorted = $challenges->sortByDesc('pivot.created_at');
-        return $sorted->values();
+         $challenges = $user->challenges()->get();
+         $sorted = $challenges->sortByDesc('pivot.created_at');
+         return $sorted->values();
     }
 
     //用户得分

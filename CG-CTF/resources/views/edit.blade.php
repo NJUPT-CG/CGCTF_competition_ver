@@ -32,6 +32,16 @@
                         <textarea name="description"  rows="10" class="form-control" splaceholder="请输入内容" >{{$challenge->description or ''}}</textarea>
                     
                         <br>
+                        <label class="radio-inline">
+                         <input type="radio" name="info" id="info" value="hide" {{$challenge->info=='hide'? 'checked':''}} > 隐藏
+                        </label>
+                        <label class="radio-inline">
+                        <input type="radio" name="info" id="info" value="start" {{$challenge->info=='start'? 'checked':''}} > 开启
+                        </label>
+                         <label class="radio-inline">
+                        <input type="radio" name="info" id="info" value="over" {{$challenge->info=='over'? 'checked':''}} > 关闭
+                        </label>
+                        <br>
                         <button class="btn btn-lg btn-info">修改</button>
                     </form>
 

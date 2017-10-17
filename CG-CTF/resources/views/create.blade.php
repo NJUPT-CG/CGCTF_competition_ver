@@ -32,6 +32,16 @@
                         <textarea name="description"  rows="10" class="form-control" splaceholder="请输入内容" >{{old('description')}}</textarea>
                     
                         <br>
+                        <label class="radio-inline">
+                         <input type="radio" name="info" id="info" value="hide" checked> 隐藏
+                        </label>
+                        <label class="radio-inline">
+                        <input type="radio" name="info" id="info" value="start"> 开启
+                        </label>
+                         <label class="radio-inline">
+                        <input type="radio" name="info" id="info" value="over"> 开启
+                        </label>
+                        <br>
                         <button class="btn btn-lg btn-info">新增</button>
                     </form>
 

@@ -59,6 +59,32 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('realname') ? ' has-error' : '' }}">
+                            <label for="realname" class="col-md-4 control-label">姓名</label>
+
+                            <div class="col-md-6">
+                                <input id="realname" type="text" class="form-control" name="realname" value="{{ old('realname') }}" required>
+
+                                @if ($errors->has('realname'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('realname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                            <div class="form-group{{ $errors->has('snumber') ? ' has-error' : '' }}">
+                            <label for="snumber" class="col-md-4 control-label">学号</label>
+
+                            <div class="col-md-6">
+                                <input id="snumber" type="text" class="form-control" name="snumber" value="{{ old('snumber') }}" required>
+
+                                @if ($errors->has('snumber'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('snumber') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
