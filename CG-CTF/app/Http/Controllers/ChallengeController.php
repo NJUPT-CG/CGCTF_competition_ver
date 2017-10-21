@@ -107,22 +107,23 @@ class ChallengeController extends Controller
         //return $request->get('class');
         $type=$request->get('class')?:'fresh';
         $users = team::scoreboard($type)->toArray();
-        $perPage = 50;
-        if ($request->has('page')) {
-            $current_page = $request->input('page');
-            $current_page = $current_page <= 0 ? 1 : $current_page;
-        } else {
-            $current_page = 1;
-        }
-        $item = array_slice($users, ($current_page - 1) * $perPage, $perPage); //注释1
-        $total = count($users);
-        $paginator = new LengthAwarePaginator($item, $total, $perPage, $current_page, [
-            'path' => Paginator::resolveCurrentPath(), //注释2
-            'pageName' => 'page',
-        ]);
-        $userlist = $paginator->toArray()['data'];
+        // $perPage = 50;
+        // if ($request->has('page')) {
+        //     $current_page = $request->input('page');
+        //     $current_page = $current_page <= 0 ? 1 : $current_page;
+        // } else {
+        //     $current_page = 1;
+        // }
+        // $item = array_slice($users, ($current_page - 1) * $perPage, $perPage); //注释1
+        // $total = count($users);
+        // $paginator = new LengthAwarePaginator($item, $total, $perPage, $current_page, [
+        //     'path' => Paginator::resolveCurrentPath(), //注释2
+        //     'pageName' => 'page',
+        // ]);
+        // $userlist = $paginator->toArray()['data'];
+        $userlist=$users;
         if($request->get('class')) return $userlist;
-        return view('scoreboard', ['users' => $userlist, 'paginator' => $paginator]);
+        return view('scoreboard', ['users' => $userlist, /*'paginator' => $paginator*/]);
         
     }
 

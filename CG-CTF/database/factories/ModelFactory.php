@@ -38,6 +38,15 @@ $factory->define(\App\challenge::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(\App\team::class, function (Faker\Generator $faker) {
+    
+
+    return ['name' => $faker->realText($maxNbChars = 20),
+            'password' => bcrypt('secret'),
+            'fresh' => 'fresh',
+            'api_token' => str_random(60)
+    ];
+});
 //$factory->define(\App\challenge::class, function (Faker\Generator $faker) {
 //    return ['flag1' => $faker->sha256];
 //});

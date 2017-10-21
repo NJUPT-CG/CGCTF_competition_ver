@@ -48,10 +48,11 @@ class team extends Model
             #echo $user;
             $id = $user->id;
             $name = $user->name;
+            $fresh = $user->fresh;
             $totalScore = team::teamscore($id);
             $lastsubtime = $user->updated_at;
             #pivot['created_at'];
-            $scores->push(array('id' => $id, 'name' => $name, 'totalScore' => $totalScore, 'lastsubtime' => $lastsubtime));
+            $scores->push(array('id' => $id, 'name' => $name,'fresh'=>$fresh, 'totalScore' => $totalScore, 'lastsubtime' => $lastsubtime));
             #echo $totalScore;
             #echo '<br>';
             #$user->put('totalScore',$totalScore);

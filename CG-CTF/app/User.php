@@ -57,7 +57,8 @@ class User extends Authenticatable
     //返回某用户解决的题目
     public static function solvedchallenges($userid)
     {
-        $user = User::find($userid);
+         if(!$userid) return [];
+         $user = User::find($userid);
          $challenges = $user->challenges()->get();
          $sorted = $challenges->sortByDesc('pivot.created_at');
          return $sorted->values();

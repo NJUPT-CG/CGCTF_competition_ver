@@ -42,6 +42,7 @@ class teamcontroller extends Controller
 
     public function teamdetail($id){
     		$team=team::find($id);
+    		if(!$team->members()->count()) return view('teamindex')->with(['team'=>true]);
     		$teamates=$team->members()->get();
     		$uid=$teamates[0]->id;
     		$score = User::userscore($uid);
@@ -83,9 +84,11 @@ class teamcontroller extends Controller
             		'api_token' => str_random(60)
         			]);
             		}
+            		$user->challenges()->detach();
             		$myteam->members()->save($user);
+            		return redirect()->to('team');
             	}
-            	else{}
+            	else{return redirect()->to('team');}
 
     		}
     	else return redirect()->route('login');
@@ -103,6 +106,7 @@ class teamcontroller extends Controller
     			$sum=$team->members()->count();
     			if($sum<3&&$sum>=0){
     				if(Hash::check($request['password'],$team->password)){
+    					$user->challenges()->detach();
     					$teamate=$team->members()->first();
     					$teamsolved=User::solvedchallenges($teamate->id);
 						$team->members()->save($user);
