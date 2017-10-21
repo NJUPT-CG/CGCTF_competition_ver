@@ -86,7 +86,7 @@ class ChallengeController extends Controller
         return view('challenge');
     }
 
-    public function ShowScoreBoard($type,Request $request)
+    public function ShowScoreBoard(Request $request)
     {
         // $users = User::scoreboard()->toArray();
         // $perPage = 50;
@@ -104,7 +104,8 @@ class ChallengeController extends Controller
         // ]);
         // $userlist = $paginator->toArray()['data'];
         // return view('scoreboard', ['users' => $userlist, 'paginator' => $paginator]);
-
+        //return $request->get('class');
+        $type=$request->get('class')?:'fresh';
         $users = team::scoreboard($type)->toArray();
         $perPage = 50;
         if ($request->has('page')) {
@@ -120,7 +121,9 @@ class ChallengeController extends Controller
             'pageName' => 'page',
         ]);
         $userlist = $paginator->toArray()['data'];
+        if($request->get('class')) return $userlist;
         return view('scoreboard', ['users' => $userlist, 'paginator' => $paginator]);
+        
     }
 
     public function ShowScore()

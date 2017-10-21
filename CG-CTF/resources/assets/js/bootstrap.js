@@ -13,6 +13,11 @@ let routes = [
         hash: true,
         routes: ['Web', 'Re', 'Pwn', 'Crypto', 'Misc']
     },
+    {
+        group: 'scoreboard',
+        hash: true,
+        routes: ['fresh', 'old', 'all']
+    },
     'scoreboard',
     'about',
     'login',
@@ -23,7 +28,10 @@ let routes = [
     'create',
     'edit',
     'publishNotice',
-    'notice'
+    'notice',
+    'team',
+    'gamemanage',
+    'teamdetail'
 ];
 
 let hashRoutesMap = (routes, routeList) => {

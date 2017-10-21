@@ -15,7 +15,7 @@
                     <mu-list-item title="Misc" :href="routeList.get('challenges.Misc')" @click="setActiveTab('Misc')"
                                   slot="nested"/>
                 </mu-list-item>
-                <mu-list-item title="Scoreboard" :href="routeList.get('scoreboard')"/>
+                <mu-list-item title="Scoreboard" :href="routeList.get('scoreboard')+'#fresh'"/>
                 <mu-list-item title="History" :href="routeList.get('score')"/>
                 <mu-list-item title="Notice" :href="routeList.get('notice')"/>
                 <mu-divider/>

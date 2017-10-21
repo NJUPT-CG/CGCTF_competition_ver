@@ -41,9 +41,9 @@ class team extends Model
     {
         $scores = collect([]);
 
-        if($type==0){$users = team::where('fresh','fresh')->get();}
-        if($type==1){$users = team::where('fresh','old')->get();}
-        if($type!=0&&$type!=1){$users = team::where([])->get();}
+        if($type=='fresh'){$users = team::where('fresh','fresh')->get();}
+        if($type=='old'){$users = team::where('fresh','old')->get();}
+        if($type=='all'){$users = team::where([])->get();}
         foreach ($users as $user) {
             #echo $user;
             $id = $user->id;

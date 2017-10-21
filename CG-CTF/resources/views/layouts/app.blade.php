@@ -28,6 +28,9 @@
     @if(strpos(Request::url(), 'challenges'))
         <challenges :login="{{ Auth::check() ? "true" : "false" }}"></challenges>
     @endif
+    @if(strpos(Request::url(), 'scoreboard'))
+        <scoreboard></scoreboard>
+    @endif
 
     @yield('content')
 </div>

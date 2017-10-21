@@ -52,7 +52,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'realname' => 'required|string',
-            'snumber' => 'required|string|unique:users',
+            'snumber' => array('required','string','unique:users','regex:/^[BHQ]1\d{7}$/'),
         ]);
     }
 

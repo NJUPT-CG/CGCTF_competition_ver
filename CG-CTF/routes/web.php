@@ -28,15 +28,18 @@ Route::get('/profile','UserController@profile');
 Route::post('/ProfileEdit','UserController@ProfileEdit');
 Route::delete('/delete/{id}','ChallengeController@delete');
 Route::get('/userDetail/{id}','ChallengeController@userDetail');
-Route::get('time/{min}','timecontroller@gamestart');
+Route::post('time','timecontroller@gamestart');
 Route::get('newteam','teamcontroller@newteampage');
 Route::post('createnewteam','teamcontroller@createteam');
 Route::post('join','teamcontroller@jointeam');
 Route::get('jointeam',function(){return view('jointeam');});
 Route::get('team','teamcontroller@teamindex');
 Route::get('teamdetail/{id}','teamcontroller@teamdetail');
+
+Route::get('/gamemanage','timecontroller@index');
+Route::get('gameover','timecontroller@over');
 // 计分板测试
-Route::get('/scoreboard/{type}', 'ChallengeController@ShowScoreBoard');
+Route::get('/scoreboard/', 'ChallengeController@ShowScoreBoard');
 
 Route::get('/score', 'ChallengeController@ShowScore');
 

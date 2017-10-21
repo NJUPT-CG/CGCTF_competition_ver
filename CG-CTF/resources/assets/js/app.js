@@ -25,6 +25,8 @@ Vue.component('appBar', require('./components/AppBar.vue'));
 Vue.component('tabBar', require('./components/TabBar.vue'));
 Vue.component('challengeCard', require('./components/ChallengeCard.vue'));
 Vue.component('challenges', require('./components/Challenges.vue'));
+Vue.component('boardBar', require('./components/BoardBar.vue'));
+Vue.component('scoreboard', require('./components/scoreboard.vue'));
 
 const app = new Vue({
     el: '#app'
