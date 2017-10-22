@@ -172,7 +172,7 @@ class ChallengeController extends Controller
             ->get();
         }
         foreach ($challenges as $challenge => $v) {
-             $challenges[$challenge]->solversCount = $challenges[$challenge]->users()->count();
+             $challenges[$challenge]->solversCount = $challenges[$challenge]->solvedteams()->count();
         }
 
        // $user = Auth::guard('api')->user();
@@ -227,6 +227,10 @@ class ChallengeController extends Controller
         }
         if($challenge->info != 'start') return 'Game Over!';
         if (($challenge->flag === $request->get('flag'))&&$challenge->info==='start') {
+            $id=$challenge->id;
+            $s=$challenge->score;
+            $c=challenge::find($id);
+            $cnt=$c->users()->count();
             $team=$user->team;
             if($team) {
             $teamates=$team->members;
@@ -237,7 +241,12 @@ class ChallengeController extends Controller
             $team->save();
             }
             else{
-            challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+                challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            }
+
+            if($cnt){
+            $c->score=(10000*$s)/(10000+$s);
+            $c->save();
             }
             return 'true';
         }
@@ -282,8 +291,13 @@ class ChallengeController extends Controller
 
     public function getSolvers(challenge $challenge)
     {
-        $users = $challenge->users()->select('name')->get();
-        $sorted = $users->sortBy('pivot.created_at');
-        return $sorted->values();
+        $teams=$challenge->solvedteams();
+
+       // $sorted = $teams->sortBy('updated_at');
+        return $teams;
     }
+
+
+
+
 }

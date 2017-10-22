@@ -38,7 +38,7 @@
                     </mu-sub-header>
                     <mu-list-item v-for="(item, index) in solvers" :key="index">
                         <span class="title">{{ item.name }}</span>
-                        <span class="subtitle">{{ item.pivot.created_at }}</span>
+                        <span class="subtitle">{{ item.updated_at.date.slice(0,-6) }}</span>
                     </mu-list-item>
                 </mu-list>
             </mu-card>

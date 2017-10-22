@@ -63,3 +63,5 @@ Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
 
 Route::get('/test', 'ChallengeController@getQuestionsBelongsToClass');
 
+
+

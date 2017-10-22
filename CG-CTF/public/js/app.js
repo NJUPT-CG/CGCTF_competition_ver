@@ -61253,7 +61253,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "title"
     }, [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('span', {
       staticClass: "subtitle"
-    }, [_vm._v(_vm._s(item.pivot.created_at))])])
+    }, [_vm._v(_vm._s(item.updated_at.date.slice(0, -6)))])])
   })], 2)], 1), _vm._v(" "), _c('mu-flat-button', {
     attrs: {
       "primary": "",

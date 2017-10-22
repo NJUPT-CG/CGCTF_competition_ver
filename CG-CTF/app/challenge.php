@@ -24,4 +24,16 @@ class challenge extends Model
         $sorted = $users->sortBy('pivot.created_at');
         return $sorted->values();
     }
+
+    public function solvedteams(){
+        $users = $this->users()->get();
+        $teams = collect([]);
+        foreach ($users as $user) {
+            $team=$user->team()->first();
+            if(!$team){$teams->push(array('name'=>$user['name'],'updated_at'=>$user['pivot']['created_at']));}            
+            else {$teams->push(array('name'=>$team['name'],'updated_at'=>$team['updated_at']));}
+        }
+        $grouped = $teams->keyBy('name');
+        return $grouped->values()->sortBy('updated_at');
+    }
 }
