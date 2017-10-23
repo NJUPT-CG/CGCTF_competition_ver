@@ -161,7 +161,8 @@ class ChallengeController extends Controller
     public function getQuestionsBelongsToClass(Request $request)
     {   
         $user = Auth::guard('api')->user();
-        if(!Hash::check('admin', $user->power)){
+        $power=$user?$user->power:'no';
+        if(!Hash::check('admin', $power)){
         $challenges = challenge::where('class', $request->get('class'))->where('info','!=','hide')
             ->select('id', 'title', 'score')
             ->get();
@@ -228,9 +229,7 @@ class ChallengeController extends Controller
         if($challenge->info != 'start') return 'Game Over!';
         if (($challenge->flag === $request->get('flag'))&&$challenge->info==='start') {
             $id=$challenge->id;
-            $s=$challenge->score;
             $c=challenge::find($id);
-            $cnt=$c->users()->count();
             $team=$user->team;
             if($team) {
             $teamates=$team->members;
@@ -243,9 +242,9 @@ class ChallengeController extends Controller
             else{
                 challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
             }
-
+            $cnt=$c->solvedteams()->count();
             if($cnt){
-            $c->score=(10000*$s)/(10000+$s);
+            $c->score=10000/($cnt+9);
             $c->save();
             }
             return 'true';
