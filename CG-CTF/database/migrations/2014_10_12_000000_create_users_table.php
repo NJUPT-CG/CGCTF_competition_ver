@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             //$table->json('finishedchallenge')->nullable();
             $table->string('api_token', 60)->unique();
-            $table->int('team_id')->nullable();
+            $table->integer('team_id')->nullable();
             $table->string('realname');
             $table->string('snumber')->unique();
             $table->timestamps();
