@@ -39,7 +39,7 @@
                         <input type="radio" name="info" id="info" value="start"> 开启
                         </label>
                          <label class="radio-inline">
-                        <input type="radio" name="info" id="info" value="over"> 开启
+                        <input type="radio" name="info" id="info" value="over"> 关闭
                         </label>
                         <br>
                         <button class="btn btn-lg btn-info">新增</button>
