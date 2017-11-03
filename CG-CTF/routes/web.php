@@ -63,5 +63,11 @@ Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
 
 Route::get('/test', 'ChallengeController@getQuestionsBelongsToClass');
 
-
+// Route::get('lock',function(){
+// 	DB::beginTransaction();
+// 	$count=App\challenge_user::where([['userid','=',195],['challengeid','=',195]])->lockForUpdate()->count();
+//             if($count==0)  {App\challenge_user::create(['userid' => 195, 'challengeid' => 195]);echo 1;}
+//             else echo 0;
+//     DB::commit();
+// });
 

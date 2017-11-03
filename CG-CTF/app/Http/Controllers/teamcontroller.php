@@ -108,7 +108,10 @@ class teamcontroller extends Controller
     				if(Hash::check($request['password'],$team->password)){
     					$user->challenges()->detach();
     					$teamate=$team->members()->first();
+                        if($teamate){
     					$teamsolved=User::solvedchallenges($teamate->id);
+                        }
+                        else $teamsolved=[];
 						$team->members()->save($user);
 						foreach ($teamsolved as $solved) {
 							challenge_user::create(['userid' => $user->id, 'challengeid' => $solved->id]);

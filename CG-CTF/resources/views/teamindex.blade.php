@@ -54,6 +54,7 @@
     @else
     <div class="container">
 <table class="table table-hover">
+    <caption  style="font-weight:bold;font-size:large;">TEAM:{{$teamdata['name'] or '' }}</caption>
     <caption>Team member</caption>
    <thead>
       <tr>

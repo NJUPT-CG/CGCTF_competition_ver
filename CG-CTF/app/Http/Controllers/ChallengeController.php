@@ -12,6 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class ChallengeController extends Controller
 {
@@ -231,17 +232,23 @@ class ChallengeController extends Controller
             $id=$challenge->id;
             $c=challenge::find($id);
             $team=$user->team;
+            DB::beginTransaction();
             if($team) {
             $teamates=$team->members;
             foreach ($teamates as $user ) {
-               challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
+            if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            else return 'Already passed';
             } 
             $team->updated_at=Carbon::now();
             $team->save();
             }
             else{
-                challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
+            if($count==0)  challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            else return 'Already passed';
             }
+            DB::commit();
             $cnt=$c->solvedteams()->count();
             if($cnt){
             $c->score=10000/($cnt+9);
