@@ -238,15 +238,13 @@ class ChallengeController extends Controller
             foreach ($teamates as $user ) {
             $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
             if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
-            else return 'Already passed';
             } 
             $team->updated_at=Carbon::now();
             $team->save();
             }
             else{
             $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
-            if($count==0)  challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
-            else return 'Already passed';
+            if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
             }
             DB::commit();
             $cnt=$c->solvedteams()->count();
