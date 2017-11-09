@@ -241,7 +241,7 @@ class ChallengeController extends Controller
             } 
             $cnt=$c->solvedteams()->count();
             if($cnt<=3){
-            $team->candy=60/$cnt;
+            $team->candy+=60/$cnt;
             }
             $team->updated_at=Carbon::now();
             $team->save();
