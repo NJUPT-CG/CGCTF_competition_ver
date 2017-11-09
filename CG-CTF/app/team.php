@@ -29,8 +29,9 @@ class team extends Model
     public static function teamscore($id){
     	$team = team::find($id);
     	$member=$team->members()->first();
+        $candy = $team->candy;
     	//print $member['id'];
-    	return User::userscore($member['id']);
+    	return User::userscore($member['id'])+$candy;
     }
 
     // public static function teammember($id){

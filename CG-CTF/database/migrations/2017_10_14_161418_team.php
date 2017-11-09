@@ -20,7 +20,7 @@ class Team extends Migration
             $table->string('password');
             $table->text('fresh');
             $table->rememberToken();
-            //$table->json('finishedchallenge')->nullable();
+            $table->integer('candy')->nullable();
             $table->string('api_token', 60)->unique();
             $table->timestamps();
         });

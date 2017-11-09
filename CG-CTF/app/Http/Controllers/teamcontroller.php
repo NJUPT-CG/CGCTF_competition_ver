@@ -27,13 +27,14 @@ class teamcontroller extends Controller
     				$id = Auth::id();
             		$score = User::userscore($id);
             		$challenges = User::solvedchallenges($id);
-            	
-
+            	    $candy = $team->candy?:0;
     				return view('teamindex')->with(['teamdata'=>$team,
     												'users'=>$teamates,
     												'score' => $score, 
     												'challenges' => $challenges,
-    												'team'=> true]);
+    												'team'=> true,
+                                                    'candy' => $candy,
+                                                    ]);
     			}
 
     	}
@@ -47,11 +48,14 @@ class teamcontroller extends Controller
     		$uid=$teamates[0]->id;
     		$score = User::userscore($uid);
     		$challenges = User::solvedchallenges($uid);
+            $candy = $team->candy?:0;
     		return view('teamindex')->with(['teamdata'=>$team,
     										'users'=>$teamates,
     										'score' => $score, 
     										'challenges' => $challenges,
-    										'team'=> true]);
+    										'team'=> true,
+                                            'candy' => $candy,
+                                            ]);
 
     }
 
@@ -81,7 +85,8 @@ class teamcontroller extends Controller
             		'name' => $request['name'],
             		'password' => bcrypt($request['password']),
             		'fresh' => $request['fresh'],
-            		'api_token' => str_random(60)
+            		'api_token' => str_random(60),
+                    'candy' => 0,
         			]);
             		}
             		$user->challenges()->detach();

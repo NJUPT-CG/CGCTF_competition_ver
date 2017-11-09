@@ -239,6 +239,10 @@ class ChallengeController extends Controller
             $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
             if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
             } 
+            $cnt=$c->solvedteams()->count();
+            if($cnt<=3){
+            $team->candy=60/$cnt;
+            }
             $team->updated_at=Carbon::now();
             $team->save();
             }
