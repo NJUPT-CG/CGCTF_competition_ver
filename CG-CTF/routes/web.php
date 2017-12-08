@@ -63,6 +63,7 @@ Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
 
 Route::get('/test', 'ChallengeController@getQuestionsBelongsToClass');
 
+Route::get('SubmitsBoard','teamcontroller@submitsHistory');
 // Route::get('lock',function(){
 // 	DB::beginTransaction();
 // 	$count=App\challenge_user::where([['userid','=',195],['challengeid','=',195]])->lockForUpdate()->count();

@@ -18095,7 +18095,7 @@ var routes = [{
     group: 'scoreboard',
     hash: true,
     routes: ['fresh', 'old', 'all']
-}, 'scoreboard', 'about', 'login', 'logout', 'score', 'register', 'profile', 'create', 'edit', 'publishNotice', 'notice', 'team', 'gamemanage', 'teamdetail'];
+}, 'scoreboard', 'about', 'login', 'logout', 'score', 'register', 'profile', 'create', 'edit', 'publishNotice', 'notice', 'team', 'gamemanage', 'teamdetail', 'SubmitsBoard'];
 
 var hashRoutesMap = function hashRoutesMap(routes, routeList) {
     routes.routes.map(function (val) {
@@ -61024,7 +61024,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('mu-list-item', {
     attrs: {
       "title": "History",
-      "href": _vm.routeList.get('score')
+      "href": _vm.routeList.get('SubmitsBoard')
     }
   }), _vm._v(" "), _c('mu-list-item', {
     attrs: {

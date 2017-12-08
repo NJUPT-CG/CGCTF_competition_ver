@@ -65,7 +65,17 @@ class teamcontroller extends Controller
     	}
     	else return redirect()->route('login');
     }
-
+    public function submitsHistory(){
+        $teams=team::all();
+        $sub=collect([]);
+        foreach ($teams as $team) {
+            $sol=User::solvedchallenges($team->members()->first()->id);
+            foreach ($sol as $s) {
+                $sub->push(array('name'=>$team['name'],'challenge'=>$s['title'],'time'=>$s['pivot']['created_at']));
+            }
+        }
+        return view('results',['challenges'=>$sub->sortByDesc('time')]);
+    }
     public function createteam(Request $data){
     		$data->flash();
     	   	if(Auth::check()){

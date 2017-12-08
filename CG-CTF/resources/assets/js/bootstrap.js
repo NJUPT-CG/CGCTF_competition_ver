@@ -31,7 +31,8 @@ let routes = [
     'notice',
     'team',
     'gamemanage',
-    'teamdetail'
+    'teamdetail',
+    'SubmitsBoard'
 ];
 
 let hashRoutesMap = (routes, routeList) => {
