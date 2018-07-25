@@ -9,14 +9,27 @@ A Simple CTF Practice &amp; Competition Platform
 
 访问 "/createChallenges" 来生成100个测试用题, flag 是 1
 
+项目的实际目录是 `./CG-CTF`
+
 ### 前端
 
 需要安装依赖，嫌太慢可以挂梯子，或者用cnpm、yarn
-```
+
+```bash
 npm install
 ```
 
 之后同步前端的样式需要运行
-```
+
+```bash
 npm run dev
+```
+
+### 后端
+
+```bash
+composer install
+php artisan config:clear
+php artisan key:generate
+php artisan serve
 ```
