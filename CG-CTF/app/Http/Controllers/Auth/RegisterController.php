@@ -52,7 +52,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'realname' => 'required|string',
-            'snumber' => array('required','string','unique:users','regex:/^[BHQ]1\d{7}$/'),
+            'snumber' => array('required','string','unique:users','regex:/^[BHQ]\d{8}$|NCTF2018$/'),
         ]);
     }
 
@@ -63,7 +63,13 @@ class RegisterController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {
+    {   
+
+        if($data['snumber']==='NCTF2018')
+        {
+            $data['snumber']='NCTF_'.str_random(10);
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

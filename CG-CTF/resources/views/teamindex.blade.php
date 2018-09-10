@@ -55,6 +55,11 @@
     <div class="container">
 <table class="table table-hover">
     <caption  style="font-weight:bold;font-size:large;">TEAM:{{$teamdata['name'] or '' }}</caption>
+    @if(isset($is_team_member))
+    @if($is_team_member)
+      <caption  style="font-weight:bold;font-size:large;">TEAM TOKEN:{{$token or '' }}</caption> 
+    @endif
+    @endif
     <caption>Team member</caption>
    <thead>
       <tr>

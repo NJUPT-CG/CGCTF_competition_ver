@@ -1,8 +1,8 @@
 <template>
     <div id="boards">
         <mu-tabs :value="activeboard" @change="handleboardChange">
-            <mu-tab value="fresh" :href="routeList.get('scoreboard.fresh')" title="萌新组"/>
-            <mu-tab value="old" :href="routeList.get('scoreboard.old')" title="大佬组"/>
+            <mu-tab value="fresh" :href="routeList.get('scoreboard.fresh')" title="校内队"/>
+            <mu-tab value="old" :href="routeList.get('scoreboard.old')" title="校外队"/>
             <mu-tab value="all" :href="routeList.get('scoreboard.all')" title="总榜"/>
         </mu-tabs>
     </div>

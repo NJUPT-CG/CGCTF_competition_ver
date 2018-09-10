@@ -34,6 +34,8 @@ class teamcontroller extends Controller
     												'challenges' => $challenges,
     												'team'=> true,
                                                     'candy' => $candy,
+                                                    'is_team_member' =>true,
+                                                    'token'=>$team->password,
                                                     ]);
     			}
 
@@ -43,7 +45,19 @@ class teamcontroller extends Controller
 
     public function teamdetail($id){
     		$team=team::find($id);
-    		if(!$team->members()->count()) return view('teamindex')->with(['team'=>true]);
+            $team_token = '';
+            $IsTeamMember =false;
+            if(Auth::check())
+                {
+                    $user = Auth::user();
+
+                    if($user->team&& strval($user->team->id)===$id)
+                    {   
+                        $IsTeamMember =true;
+                        $team_token = $user->team->password;
+                    }
+                }
+    		if(!$team->members()->count()) return view('teamindex')->with(['team'=>true,'is_team_member'=>$IsTeamMember,'token'=>$team_token]);
     		$teamates=$team->members()->get();
     		$uid=$teamates[0]->id;
     		$score = User::userscore($uid);
@@ -55,6 +69,8 @@ class teamcontroller extends Controller
     										'challenges' => $challenges,
     										'team'=> true,
                                             'candy' => $candy,
+                                            'is_team_member' =>$IsTeamMember,
+                                            'token'=>$team_token,
                                             ]);
 
     }
@@ -84,8 +100,6 @@ class teamcontroller extends Controller
     				$request=$data->all();
     				 $v = Validator::make($request, [
                     'name' => 'required|string|max:255|unique:teams',
-                    'password' => 'required|string|min:6|confirmed',
-                    'password_confirmation' => 'same:password',
                     'fresh' =>'required',
                 	]);
     				if ($v->fails()) {
@@ -93,7 +107,7 @@ class teamcontroller extends Controller
             		} else {
             		$myteam=team::create([
             		'name' => $request['name'],
-            		'password' => bcrypt($request['password']),
+            		'password' => str_random(32),
             		'fresh' => $request['fresh'],
             		'api_token' => str_random(60),
                     'candy' => 0,
@@ -119,8 +133,8 @@ class teamcontroller extends Controller
     			$team = team::where('name',$request['name'])->first();
     			if(!$team) return redirect()->to('jointeam')->withErrors(['name'=>'there is no such team!']);
     			$sum=$team->members()->count();
-    			if($sum<3&&$sum>=0){
-    				if(Hash::check($request['password'],$team->password)){
+    			if($sum<4&&$sum>=0){
+    				if($request['password']===$team->password){
     					$user->challenges()->detach();
     					$teamate=$team->members()->first();
                         if($teamate){
@@ -139,7 +153,7 @@ class teamcontroller extends Controller
     				}
     			}
     			else{
-    				return redirect()->to('jointeam')->withErrors(['name'=>'no more than 3 members!']);
+    				return redirect()->to('jointeam')->withErrors(['name'=>'no more than 4 members!']);
     				}
     			}
     			else {
