@@ -11,6 +11,7 @@ A Simple CTF Practice &amp; Competition Platform
 
 
 
+
 访问 /IN1t4dmin_Cg_c7f_X1c_+1s 可新增管理员, confirm code 为env中填写的 ADMIN_CODE 值
 
 安装CGCTF前,确保服务器上已装好 apache/nginx mysql php5.0+(推荐7.0+) composer node.js npm 
@@ -49,14 +50,28 @@ ADMIN_CODE 用于创建管理员的密码,（创建完毕可以删除该值，�
 
 队伍成员不超过4人，校外人员使用NCTF2018作为学号注册
 
+项目的实际目录是 `./CG-CTF`
+
+
 ### 前端
 
 需要安装依赖，嫌太慢可以挂梯子，或者用cnpm、yarn
-```
+
+```bash
 npm install
 ```
 
 之后同步前端的样式需要运行
-```
+
+```bash
 npm run dev
+```
+
+### 后端
+
+```bash
+composer install
+php artisan config:clear
+php artisan key:generate
+php artisan serve
 ```
