@@ -179,10 +179,19 @@ class ChallengeController extends Controller
 
        // $user = Auth::guard('api')->user();
         if (!!$user) {
-            $challenges->map(function ($challenge) use ($user){
+            $team=$user->team;
+            if(!$team)
+            {$challenges->map(function ($challenge) use ($user){
                 $challenge->passed = $user->challengePassed($challenge->id);
                 return $challenge;
-            });
+            });}
+            else
+            {
+               $challenges->map(function ($challenge) use ($team){
+                $challenge->passed = $team->challengePassed($challenge->id);
+                return $challenge;
+            }); 
+            }
         }
 
         return $challenges;
@@ -227,18 +236,24 @@ class ChallengeController extends Controller
         if ($user->challengePassed($challenge->id)) {
             return 'Already passed';
         }
+        $team=$user->team;
+        if($team)
+        {
+            $teamates=$team->members;
+            foreach ($teamates as $auser ) {
+                 if ($auser->challengePassed($challenge->id)) {
+                    return 'Already passed';
+                 }
+            } 
+        }
         if($challenge->info != 'start') return 'Game Over!';
         if (($challenge->flag === $request->get('flag'))&&$challenge->info==='start') {
             $id=$challenge->id;
-            $c=challenge::find($id);
-            $team=$user->team;
+            $c=challenge::find($id);          
             DB::beginTransaction();
             if($team) {
-            $teamates=$team->members;
-            foreach ($teamates as $user ) {
             $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
             if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
-            } 
             $cnt=$c->solvedteams()->count();
             if($cnt<=3){
             $team->candy+=60/$cnt;

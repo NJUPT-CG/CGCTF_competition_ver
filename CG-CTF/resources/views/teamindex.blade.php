@@ -88,6 +88,7 @@
       <tr>
       <th>Title</th>
           <th>score</th>
+          <th>solver</th>
           <th>time</th>
       </tr>
    </thead>
@@ -97,6 +98,7 @@
       <tr>
       <td>{{$challenge['title']}}</td>
           <td>{{$challenge['score']}}</td>
+          <td>{{$challenge['solver']}}</td>
           <td>{{$challenge['pivot']['created_at']}}</td>
        </tr>
    </tbody>

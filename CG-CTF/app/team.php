@@ -28,15 +28,44 @@ class team extends Model
 
     public static function teamscore($id){
     	$team = team::find($id);
-    	$member=$team->members()->first();
+    	$member=$team->members;
+        $total=0;
+        foreach ($member as $user) {
+            $total+=User::userscore($user['id']);
+        }
         $candy = $team->candy;
     	//print $member['id'];
-    	return User::userscore($member['id'])+$candy;
+    	return $total+$candy;
     }
 
     // public static function teammember($id){
     // 	return team::find($id)->members()->get();
     // }
+
+    public static function solvedchallenges($id)
+    {
+         if(!$id) return [];
+         $team = team::find($id);
+         $users = $team->members;
+         $challenges =collect([]);
+         foreach ($users as $user) {
+            $c = $user->challenges()->get();
+            foreach ($c as $ch) {
+                $ch = collect($ch);
+                $ch->put('solver',$user->name);
+                $challenges->push($ch);
+            }         
+         }
+         $sorted = $challenges->sortByDesc('pivot.created_at');
+        return $sorted->values();
+
+    }
+
+
+    public function challengePassed($challenge)
+    {
+        return !!team::solvedchallenges($this->id)->where('id', $challenge)->count();
+    }
 
     public static function scoreboard($type)
     {

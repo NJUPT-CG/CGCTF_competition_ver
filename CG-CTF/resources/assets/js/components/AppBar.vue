@@ -1,6 +1,7 @@
 <template>
     <mu-appbar title="CG CTF">
         <mu-icon-button @click="drawerToggle" icon="menu" slot="left"/>
+        
         <mu-icon-menu icon="more_vert" slot="right">
             <mu-menu-item v-if="!login" title="login" :href="routeList.get('login')"/>
             <mu-menu-item v-if="!login" title="register" :href="routeList.get('register')"/>

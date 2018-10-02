@@ -24,9 +24,9 @@ class teamcontroller extends Controller
     			else {
     				$team=$user->team;
     				$teamates=$team->members()->get();
-    				$id = Auth::id();
-            		$score = User::userscore($id);
-            		$challenges = User::solvedchallenges($id);
+    				$id = $team->id;
+            		$score = team::teamscore($id);
+            		$challenges = team::solvedchallenges($id);
             	    $candy = $team->candy?:0;
     				return view('teamindex')->with(['teamdata'=>$team,
     												'users'=>$teamates,
@@ -60,8 +60,8 @@ class teamcontroller extends Controller
     		if(!$team->members()->count()) return view('teamindex')->with(['team'=>true,'is_team_member'=>$IsTeamMember,'token'=>$team_token]);
     		$teamates=$team->members()->get();
     		$uid=$teamates[0]->id;
-    		$score = User::userscore($uid);
-    		$challenges = User::solvedchallenges($uid);
+    		$score =team::teamscore($id);
+    		$challenges = team::solvedchallenges($id);
             $candy = $team->candy?:0;
     		return view('teamindex')->with(['teamdata'=>$team,
     										'users'=>$teamates,
@@ -82,12 +82,12 @@ class teamcontroller extends Controller
     	else return redirect()->route('login');
     }
     public function submitsHistory(){
-        $teams=team::all();
+        $users=User::all();
         $sub=collect([]);
-        foreach ($teams as $team) {
-            $sol=User::solvedchallenges($team->members()->first()->id);
+        foreach ($users as $user) {
+            $sol=User::solvedchallenges($user->id);
             foreach ($sol as $s) {
-                $sub->push(array('name'=>$team['name'],'challenge'=>$s['title'],'time'=>$s['pivot']['created_at']));
+                $sub->push(array('name'=>$user->team['name'],'challenge'=>$s['title'],'time'=>$s['pivot']['created_at']));
             }
         }
         return view('results',['challenges'=>$sub->sortByDesc('time')]);

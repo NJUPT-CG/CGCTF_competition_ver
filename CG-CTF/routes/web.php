@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('notice');
 });
 Route::get('/user', 'UserController@index');
 //Route::post('/user/login','UserController@login');
