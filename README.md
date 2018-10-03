@@ -74,4 +74,5 @@ composer install
 php artisan config:clear
 php artisan key:generate
 php artisan serve
+php artisan queue:work #定时功能需要使用队列
 ```
