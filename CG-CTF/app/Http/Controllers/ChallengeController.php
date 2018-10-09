@@ -247,7 +247,9 @@ class ChallengeController extends Controller
             } 
         }
         if($challenge->info != 'start') return 'Game Over!';
-        if (($challenge->flag === $request->get('flag'))&&$challenge->info==='start') {
+        $dyn = ENV('DYN_FLAG');
+        $teamtoken = $team->password;
+        if (($challenge->flag === $request->get('flag') || ($dyn && md5(($challenge->flag).$teamtoken)===$request->get('flag')) ) && $challenge->info==='start') {
             $id=$challenge->id;
             $c=challenge::find($id);          
             DB::beginTransaction();
