@@ -136,15 +136,15 @@ class teamcontroller extends Controller
     			if($sum<4&&$sum>=0){
     				if($request['password']===$team->password){
     					$user->challenges()->detach();
-    					$teamate=$team->members()->first();
-                        if($teamate){
-    					$teamsolved=User::solvedchallenges($teamate->id);
-                        }
-                        else $teamsolved=[];
+    					// $teamate=$team->members()->first();
+         //                if($teamate){
+    					// $teamsolved=User::solvedchallenges($teamate->id);
+         //                }
+         //                else $teamsolved=[];
 						$team->members()->save($user);
-						foreach ($teamsolved as $solved) {
-							challenge_user::create(['userid' => $user->id, 'challengeid' => $solved->id]);
-						}
+						// foreach ($teamsolved as $solved) {
+						// 	challenge_user::create(['userid' => $user->id, 'challengeid' => $solved->id]);
+						// }
     					//return 'mmmm';
     					return redirect()->to('team');
     				}
