@@ -43,7 +43,7 @@ class teamcontroller extends Controller
     	else return redirect()->route('login');
     }
 
-    public function teamdetail($id){
+    public function teamdetail($id,Request $data){
     		$team=team::find($id);
             $team_token = '';
             $IsTeamMember =false;
@@ -63,6 +63,15 @@ class teamcontroller extends Controller
     		$score =team::teamscore($id);
     		$challenges = team::solvedchallenges($id);
             $candy = $team->candy?:0;
+            if($data->has('api')) 
+            {   
+                foreach ($challenges as $chall => $c) {
+                    $challenges[$chall] = $challenges[$chall]->only(['title','class','score','pivot']);
+                }
+                return $challenges;
+            }
+
+                
     		return view('teamindex')->with(['teamdata'=>$team,
     										'users'=>$teamates,
     										'score' => $score, 
@@ -81,15 +90,19 @@ class teamcontroller extends Controller
     	}
     	else return redirect()->route('login');
     }
-    public function submitsHistory(){
+    public function submitsHistory(Request $data){
         $users=User::all();
         $sub=collect([]);
         foreach ($users as $user) {
             $sol=User::solvedchallenges($user->id);
+            
             foreach ($sol as $s) {
-                $sub->push(array('name'=>$user->team['name'],'challenge'=>$s['title'],'time'=>$s['pivot']['created_at']));
+                $test = array('name'=>$user->team['name'],'challenge'=>$s['title'],'score'=>$s['score'],'class'=>$s['class'],'time'=>$s['pivot']['created_at']->toDateTimeString());
+                $sub->push($test);
             }
         }
+        
+        if($data->has('api')) return $sub->sortByDesc('time')->values();
         return view('results',['challenges'=>$sub->sortByDesc('time')]);
     }
     public function createteam(Request $data){

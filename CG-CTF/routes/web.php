@@ -34,7 +34,7 @@ Route::post('createnewteam','teamcontroller@createteam');
 Route::post('join','teamcontroller@jointeam');
 Route::get('jointeam',function(){return view('jointeam');});
 Route::get('team','teamcontroller@teamindex');
-Route::get('teamdetail/{id}','teamcontroller@teamdetail');
+Route::get('teamdetail/{id}','teamcontroller@teamdetail')->middleware('cors');
 
 Route::get('/gamemanage','timecontroller@index');
 Route::get('gameover','timecontroller@over');
@@ -63,7 +63,7 @@ Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
 
 Route::get('/test', 'ChallengeController@getQuestionsBelongsToClass');
 
-Route::get('SubmitsBoard','teamcontroller@submitsHistory');
+Route::get('SubmitsBoard','teamcontroller@submitsHistory')->middleware('cors');
 
 Route::get('IN1t4dmin_Cg_c7f_X1c_+1s',function(){return view('regadmin');});
 
