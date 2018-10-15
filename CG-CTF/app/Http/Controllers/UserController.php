@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Validator;
 class UserController extends Controller
 {
     public function index(){
