@@ -51,8 +51,10 @@ class team extends Model
          foreach ($users as $user) {
             $c = $user->challenges()->get();
             foreach ($c as $ch) {
+                $sol = $ch->solvedteams()->where('name',$team->name)->first();
                 $ch = collect($ch);
                 $ch->put('solver',$user->name);
+                $ch->put('srank',$sol['srank']);
                 $challenges->push($ch);
             }         
          }

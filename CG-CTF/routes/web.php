@@ -38,6 +38,7 @@ Route::get('teamdetail/{id}','teamcontroller@teamdetail')->middleware('cors');
 
 Route::get('/gamemanage','timecontroller@index');
 Route::get('gameover','timecontroller@over');
+Route::get('gamestartnow','timecontroller@GameStartNow');
 // 计分板测试
 Route::get('/scoreboard/', 'ChallengeController@ShowScoreBoard');
 

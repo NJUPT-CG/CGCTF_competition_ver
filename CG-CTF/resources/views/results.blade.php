@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-<table class="table">
+<table class="table" style="table-layout:fixed">
    <thead>
       <tr>
       <th>team</th>
@@ -13,8 +13,8 @@
        @foreach($challenges as $challenge)
     <tbody>
       <tr>
-      <td>{{$challenge['name']}}</td>
-		  <td>{{$challenge['challenge']}}</td>
+      <td style="overflow:hidden" >{{$challenge['name']}}</td>
+		  <td style="overflow:hidden" >{{$challenge['challenge']}}</td>
 		  <td>{{$challenge['time']}}</td>
 	   </tr>
    </tbody>

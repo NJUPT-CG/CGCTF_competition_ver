@@ -27,12 +27,14 @@ class challenge extends Model
 
     public function solvedteams(){
         $users = $this->users()->get();
+        $users = $users->sortBy('pivot.created_at');
         $teams = collect([]);
+        $sr = 1;
         foreach ($users as $user) {
             $team=$user->team()->first();
-            if($team){$teams->push(array('name'=>$team['name'],'updated_at'=>$team['updated_at']));}
+            if($team){$teams->push(array('name'=>$team['name'],'updated_at'=> $user['pivot']['created_at'],'srank'=>$sr)); }#
+            $sr++;
         }
-        $grouped = $teams->keyBy('name');
-        return $grouped->values()->sortBy('updated_at');
+        return $teams;
     }
 }

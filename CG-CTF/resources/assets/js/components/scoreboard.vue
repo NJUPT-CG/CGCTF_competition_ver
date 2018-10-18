@@ -2,7 +2,7 @@
  <div id="scoreboard">
         <board-bar></board-bar>
 <div class="container">
-<table class="table table-hover" v-show="activeboard === 'fresh'">
+<table class="table table-hover" style="table-layout:fixed" v-show="activeboard === 'fresh'">
   <caption>Score Board</caption>
    <thead>
       <tr>
@@ -16,14 +16,14 @@
     <tbody v-for ="(user,index) in fresh">
       <tr @click="detail(user.id)">
          <td>{{user.rank}}</td>
-         <td>{{user.name}}</td>
+         <td style="overflow:hidden" >{{user.name}}</td>
       <td>{{user.totalScore}}</td>
       <td>{{user.lastsubtime.date.slice(0,-6)}}</td>
      </tr>
    </tbody>
 
 </table>
-<table class="table table-hover" v-show="activeboard === 'old'">
+<table class="table table-hover" style="table-layout:fixed" v-show="activeboard === 'old'">
   <caption>Score Board</caption>
    <thead>
       <tr>
@@ -37,14 +37,14 @@
     <tbody v-for ="(user,index) in old">
       <tr @click="detail(user.id)">
          <td>{{user.rank}}</td>
-         <td>{{user.name}}</td>
+         <td style="overflow:hidden" >{{user.name}}</td>
       <td>{{user.totalScore}}</td>
       <td>{{user.lastsubtime.date.slice(0,-6)}}</td>
      </tr>
    </tbody>
 
 </table>
-<table class="table table-hover" v-show="activeboard === 'all'">
+<table class="table table-hover" style="table-layout:fixed" v-show="activeboard === 'all'">
   <caption>Score Board</caption>
    <thead>
       <tr>
@@ -58,7 +58,7 @@
     <tbody v-for ="(user,index) in all">
       <tr @click="detail(user.id)">
          <td>{{user.rank}}</td>
-         <td>{{user.name}}</td>
+         <td style="overflow:hidden" >{{user.name}}</td>
       <td>{{user.totalScore}}</td>
       <td>{{user.lastsubtime.date.slice(0,-6)}}</td>
      </tr>

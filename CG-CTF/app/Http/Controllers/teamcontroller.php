@@ -66,7 +66,7 @@ class teamcontroller extends Controller
             if($data->has('api')) 
             {   
                 foreach ($challenges as $chall => $c) {
-                    $challenges[$chall] = $challenges[$chall]->only(['title','class','score','pivot']);
+                    $challenges[$chall] = $challenges[$chall]->only(['title','class','score','pivot','srank']);
                 }
                 return $challenges;
             }

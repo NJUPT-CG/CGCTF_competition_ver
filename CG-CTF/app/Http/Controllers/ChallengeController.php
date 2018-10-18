@@ -107,7 +107,8 @@ class ChallengeController extends Controller
         // return view('scoreboard', ['users' => $userlist, 'paginator' => $paginator]);
         //return $request->get('class');
         $type=$request->get('class')?:'fresh';
-        $users = team::scoreboard($type)->toArray();
+        $temp = team::scoreboard($type);
+        $users = $temp->toArray();
         // $perPage = 50;
         // if ($request->has('page')) {
         //     $current_page = $request->input('page');
@@ -123,6 +124,7 @@ class ChallengeController extends Controller
         // ]);
         // $userlist = $paginator->toArray()['data'];
         $userlist=$users;
+        if($request->has('api')) return $temp->take(10)->all();
         if($request->get('class')) return $userlist;
         return view('scoreboard', ['users' => $userlist, /*'paginator' => $paginator*/]);
         
@@ -278,6 +280,7 @@ class ChallengeController extends Controller
         return 'false';
     }
 
+
     /**
      * api method
      *
@@ -315,7 +318,8 @@ class ChallengeController extends Controller
 
 
     public function getSolvers(challenge $challenge)
-    {
+    {   
+               
         $teams=$challenge->solvedteams();
 
        // $sorted = $teams->sortBy('updated_at');

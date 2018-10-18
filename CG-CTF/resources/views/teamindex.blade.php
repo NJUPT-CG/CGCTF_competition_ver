@@ -83,7 +83,7 @@
 </table>
 
 <table class="table">
-    <caption>Total Score:{{$score or '' }}+{{$candy or '0'}}</caption>
+    <caption>Total Score:{{$score or '' }} ({{$candy or '0'}} bonus)</caption>
    <thead>
       <tr>
       <th>Title</th>
