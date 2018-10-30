@@ -13,9 +13,9 @@
        @foreach($challenges as $challenge)
     <tbody>
       <tr>
-      <td style="overflow:hidden" >{{$challenge['name']}}</td>
-		  <td style="overflow:hidden" >{{$challenge['challenge']}}</td>
-		  <td>{{$challenge['time']}}</td>
+      <td style="overflow:hidden" ><data-text text="{{$challenge['name']}}"/></td>
+		  <td style="overflow:hidden" ><data-text text="{{$challenge['challenge']}}"/></td>
+		  <td><data-text text="{{$challenge['time']}}"/></td>
 	   </tr>
    </tbody>
        @endforeach

@@ -54,10 +54,10 @@
     @else
     <div class="container">
 <table class="table table-hover">
-    <caption  style="font-weight:bold;font-size:large;">TEAM:{{$teamdata['name'] or '' }}</caption>
-    @if(isset($is_team_member))
+    <caption  style="font-weight:bold;font-size:large;">TEAM:<data-text text="{{ $teamdata['name'] or '' }}"/></caption>
+    @if(isset($is_team_member)) 
     @if($is_team_member)
-      <caption  style="font-weight:bold;font-size:large;">TEAM TOKEN:{{$token or '' }}</caption> 
+      <caption  style="font-weight:bold;font-size:large;">TEAM TOKEN:<data-text text="{{$token or '' }}"/></caption> 
     @endif
     @endif
     <caption>Team member</caption>
@@ -72,10 +72,10 @@
    @if(isset($users))
        @foreach($users as $user)
     <tbody>
-         <td>{{$user['name']}}</td>
-          <td>{{$user['email']}}</td>
-          <td>{{$user['realname']}}</td>
-          <td>{{$user['snumber']}}</td>
+         <td><data-text text="{{$user['name']}}"/></td>
+          <td><data-text text="{{$user['email']}}"/></td>
+          <td><data-text text="{{$user['realname']}}"/></td>
+          <td><data-text text="{{$user['snumber']}}"/></td>
        </tr>
    </tbody>
        @endforeach
@@ -96,10 +96,10 @@
        @foreach($challenges as $challenge)
     <tbody>
       <tr>
-      <td>{{$challenge['title']}}</td>
-          <td>{{$challenge['score']}}</td>
-          <td>{{$challenge['solver']}}</td>
-          <td>{{$challenge['pivot']['created_at']}}</td>
+      <td><data-text text="{{$challenge['title']}}"/></td>
+          <td><data-text text="{{$challenge['score']}}"/></td>
+          <td><data-text text="{{$challenge['solver']}}"/></td>
+          <td><data-text text="{{$challenge['pivot']['created_at']}}"/></td>
        </tr>
    </tbody>
        @endforeach

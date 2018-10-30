@@ -26,6 +26,8 @@ Vue.component('challengeCard', require('./components/ChallengeCard.vue'));
 Vue.component('challenges', require('./components/Challenges.vue'));
 Vue.component('boardBar', require('./components/BoardBar.vue'));
 Vue.component('scoreboard', require('./components/scoreboard.vue'));
+Vue.component('data-text', require('./components/Text.vue'));
+Vue.component('data-brtext',require('./components/Brtext.vue'));
 
 const app = new Vue({
     el: '#app'

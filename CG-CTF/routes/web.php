@@ -42,7 +42,7 @@ Route::get('gamestartnow','timecontroller@GameStartNow');
 // 计分板测试
 Route::get('/scoreboard/', 'ChallengeController@ShowScoreBoard');
 
-Route::get('/score', 'ChallengeController@ShowScore');
+#Route::get('/score', 'ChallengeController@ShowScore');
 
 Route::get('about',function(){return view('about');});
 
