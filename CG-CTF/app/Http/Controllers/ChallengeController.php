@@ -87,6 +87,24 @@ class ChallengeController extends Controller
         return view('challenge');
     }
 
+
+    public function updaterank()
+    {
+        $challenges = challenge::all();
+        foreach ($challenges as $c ) {
+        $users = $c->users()->get();
+        $users = $users->sortBy('pivot.created_at');
+        //$teams = collect([]);
+        $sr = 1;
+        foreach ($users as $user) {
+            
+            if($user->team){$user->challenges()->updateExistingPivot($c->id,['rank'=>$sr]);}
+            $sr++;
+           // $sr++;
+        }
+        }
+    }
+
     public function ShowScoreBoard(Request $request)
     {
         // $users = User::scoreboard()->toArray();
@@ -248,26 +266,35 @@ class ChallengeController extends Controller
                  }
             } 
         }
+        else
+        {
+            return 'Please join a team!';
+        }
         if($challenge->info != 'start') return 'Game Over!';
         $dyn = ENV('DYN_FLAG');
         $teamtoken = $team->password;
-        if (($challenge->flag === $request->get('flag') || ($dyn && md5(($challenge->flag).$teamtoken)===$request->get('flag')) ) && $challenge->info==='start') {
+        if (($challenge->flag === $request->get('flag') || ($dyn && 'NCTF{'.hash('sha256',($challenge->flag).$teamtoken,false).'}' === $request->get('flag')) ) && $challenge->info==='start') {
             $id=$challenge->id;
             $c=challenge::find($id);          
             DB::beginTransaction();
-            if($team) {
-            $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
-            if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
-            $cnt=$c->solvedteams()->count();
-            if($cnt<=3){
-            $team->candy+=60/$cnt;
+            if($team) 
+            {
+                $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
+                if($count==0) 
+                {
+                $cnt=$c->solvedteams()->count();
+                challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id,'rank'=>($cnt+1)]);
+                $team->updated_at=Carbon::now();
+                $team->save();
+                }
+                else
+                {
+                     return 'Already passed';
+                }
             }
-            $team->updated_at=Carbon::now();
-            $team->save();
-            }
-            else{
-            $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
-            if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            else
+            {
+                return 'Please join a team!';
             }
             DB::commit();
             $cnt=$c->solvedteams()->count();

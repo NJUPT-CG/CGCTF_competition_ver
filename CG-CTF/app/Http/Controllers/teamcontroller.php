@@ -27,13 +27,11 @@ class teamcontroller extends Controller
     				$id = $team->id;
             		$score = team::teamscore($id);
             		$challenges = team::solvedchallenges($id);
-            	    $candy = $team->candy?:0;
     				return view('teamindex')->with(['teamdata'=>$team,
     												'users'=>$teamates,
     												'score' => $score, 
     												'challenges' => $challenges,
     												'team'=> true,
-                                                    'candy' => $candy,
                                                     'is_team_member' =>true,
                                                     'token'=>$team->password,
                                                     ]);
@@ -61,29 +59,39 @@ class teamcontroller extends Controller
     		$teamates=$team->members()->get();
     		$uid=$teamates[0]->id;
     		$score =team::teamscore($id);
-    		$challenges = team::solvedchallenges($id);
-            $candy = $team->candy?:0;
-            if($data->has('api')) 
-            {   
-                foreach ($challenges as $chall => $c) {
-                    $challenges[$chall] = $challenges[$chall]->only(['title','class','score','pivot','srank']);
-                }
-                return $challenges;
-            }
-
-                
+    		$challenges = team::solvedchallenges($id);                
     		return view('teamindex')->with(['teamdata'=>$team,
     										'users'=>$teamates,
     										'score' => $score, 
     										'challenges' => $challenges,
     										'team'=> true,
-                                            'candy' => $candy,
                                             'is_team_member' =>$IsTeamMember,
                                             'token'=>$team_token,
                                             ]);
 
     }
-
+    public function TeamsDetails(Request $data)
+    {
+        $ids = $data['list'];
+        $ids = collect($ids);
+        $teams = collect([]);
+        foreach ($ids as $id) 
+        {
+           //$team = team::find($id);
+           $solved = team::solvedchallenges($id);
+           foreach ($solved as $s => $v) {
+               $time = $solved[$s]['pivot']['created_at'];
+               $solved[$s] = $solved[$s]->only('id','score','srank');
+               if($solved[$s]['srank'] == 1) $solved[$s]['score'] = round($solved[$s]['score']*1.06);
+               if($solved[$s]['srank'] == 2) $solved[$s]['score'] = round($solved[$s]['score']*1.03);
+               if($solved[$s]['srank'] == 3) $solved[$s]['score'] = round($solved[$s]['score']*1.02);
+               $solved[$s]->put('time',$time);
+           }
+           //dd($solved);
+           $teams->put($id,$solved);
+        }
+        return $teams;
+    }
     public function newteampage(){
     	if(Auth::check()){
     		return view('newteam');

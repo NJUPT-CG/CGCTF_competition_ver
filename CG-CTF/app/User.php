@@ -41,7 +41,7 @@ class User extends Authenticatable
     //关联模型
     public function challenges()
     {
-        return $this->belongsToMany('App\challenge', 'challenge_users', 'userid', 'challengeid')->withPivot('created_at');
+        return $this->belongsToMany('App\challenge', 'challenge_users', 'userid', 'challengeid')->withPivot('created_at','rank');
     }
 
     public function team(){
@@ -71,9 +71,14 @@ class User extends Authenticatable
         #echo $solveds;
         $totalScore = 0;
         foreach ($solveds as $solved) {
-            $totalScore += $solved->score;
+            $rank = $solved->pivot->rank;
+            $bonus=0;
+            if($rank == 1) $bonus = ($solved->score)*0.06;
+            if($rank == 2) $bonus = ($solved->score)*0.03;
+            if($rank == 3) $bonus = ($solved->score)*0.02;
+             $totalScore +=($solved->score + $bonus);
         }
-        return $totalScore;
+        return round($totalScore);
     }
 
     //计分板

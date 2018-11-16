@@ -33,9 +33,8 @@ class team extends Model
         foreach ($member as $user) {
             $total+=User::userscore($user['id']);
         }
-        $candy = $team->candy;
     	//print $member['id'];
-    	return $total+$candy;
+    	return $total;
     }
 
     // public static function teammember($id){
@@ -46,15 +45,17 @@ class team extends Model
     {
          if(!$id) return [];
          $team = team::find($id);
+         if(!$team) return [];
          $users = $team->members;
          $challenges =collect([]);
          foreach ($users as $user) {
             $c = $user->challenges()->get();
             foreach ($c as $ch) {
-                $sol = $ch->solvedteams()->where('name',$team->name)->first();
+                $rank = $ch->pivot->rank;
+                //$sol = $ch->solvedteams()->where('name',$team->name)->first();
                 $ch = collect($ch);
                 $ch->put('solver',$user->name);
-                $ch->put('srank',$sol['srank']);
+                $ch->put('srank',$rank);
                 $challenges->push($ch);
             }         
          }

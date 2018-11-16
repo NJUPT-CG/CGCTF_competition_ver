@@ -54,28 +54,36 @@
     @else
     <div class="container">
 <table class="table table-hover">
-    <caption  style="font-weight:bold;font-size:large;">TEAM:<data-text text="{{ $teamdata['name'] or '' }}"/></caption>
+    <h3  style="font-weight:bold;font-size:large;">TEAM:<data-text text="{{ $teamdata['name'] or '' }}"/></h3>
     @if(isset($is_team_member)) 
     @if($is_team_member)
-      <caption  style="font-weight:bold;font-size:large;">TEAM TOKEN:<data-text text="{{$token or '' }}"/></caption> 
+      <h3 style="font-weight:bold;font-size:large;">TEAM TOKEN:<data-text text="{{$token or '' }}"/></h3> 
     @endif
     @endif
     <caption>Team member</caption>
    <thead>
       <tr>
          <th>name</th>
+         @if(App\User::isadmin())
           <th>email</th>
+          @endif
           <th>姓名</th>
+          @if(App\User::isadmin())
           <th>学号</th>
+          @endif
       </tr>
    </thead>
    @if(isset($users))
        @foreach($users as $user)
     <tbody>
          <td><data-text text="{{$user['name']}}"/></td>
+         @if(App\User::isadmin())
           <td><data-text text="{{$user['email']}}"/></td>
+          @endif
           <td><data-text text="{{$user['realname']}}"/></td>
+          @if(App\User::isadmin())
           <td><data-text text="{{$user['snumber']}}"/></td>
+          @endif
        </tr>
    </tbody>
        @endforeach
@@ -83,12 +91,13 @@
 </table>
 
 <table class="table">
-    <caption>Total Score:{{$score or '' }} ({{$candy or '0'}} bonus)</caption>
+    <caption>Total Score:{{$score or '' }}</caption>
    <thead>
       <tr>
       <th>Title</th>
           <th>score</th>
           <th>solver</th>
+          <th>rank</th>
           <th>time</th>
       </tr>
    </thead>
@@ -99,6 +108,7 @@
       <td><data-text text="{{$challenge['title']}}"/></td>
           <td><data-text text="{{$challenge['score']}}"/></td>
           <td><data-text text="{{$challenge['solver']}}"/></td>
+          <td><data-text text="{{$challenge['srank']}}"/></td>
           <td><data-text text="{{$challenge['pivot']['created_at']}}"/></td>
        </tr>
    </tbody>

@@ -64,7 +64,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
-
+        //die('stop');
+        //return 'stop';
         if($data['snumber']==='NCTF2018')
         {
             $data['snumber']='NCTF_'.str_random(10);

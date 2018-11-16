@@ -69,7 +69,9 @@ Route::get('SubmitsBoard','teamcontroller@submitsHistory')->middleware('cors');
 Route::get('IN1t4dmin_Cg_c7f_X1c_+1s',function(){return view('regadmin');});
 
 Route::post('regadmin','UserController@regadmin');
+Route::get('updaterank','ChallengeController@updaterank');
 
+Route::get('scoreboarddetail','teamcontroller@TeamsDetails');
 
 // Route::get('lock',function(){
 // 	DB::beginTransaction();

@@ -13,7 +13,7 @@ class challenge extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'challenge_users', 'challengeid', 'userid')->withPivot('created_at');
+        return $this->belongsToMany('App\User', 'challenge_users', 'challengeid', 'userid')->withPivot('created_at','rank');
     }
 
     //返回某题目解决的用户
@@ -29,11 +29,12 @@ class challenge extends Model
         $users = $this->users()->get();
         $users = $users->sortBy('pivot.created_at');
         $teams = collect([]);
-        $sr = 1;
+        //$sr = 1;
         foreach ($users as $user) {
             $team=$user->team()->first();
+            $sr = $user->pivot->rank;
             if($team){$teams->push(array('name'=>$team['name'],'updated_at'=> $user['pivot']['created_at'],'srank'=>$sr)); }#
-            $sr++;
+           // $sr++;
         }
         return $teams;
     }
